@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  ">
+	<!-- 引入属性文件,config.properties位于src/main/resources目录下 <context:property-placeholder 
+		location="classpath:config.properties" /> -->
+	<!-- 自动扫描dao和service包(自动注入) <context:component-scan base-package="com.news.dao,com.news.biz" 
+		/> -->
+
+	<bean id="topicDaoImpl" class="com.news.dao.Impl.TopicDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="topicBizImpl" class="com.news.biz.Impl.TopicBizImpl">
+		<property name="topicDaoImpl">
+			<ref bean="topicDaoImpl" />
+		</property>
+	</bean>
+
+	<bean id="adminDaoImpl" class="com.news.dao.Impl.AdminDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="adminBizImpl" class="com.news.biz.Impl.AdminBizImpl">
+		<property name="adminDaoImpl">
+			<ref bean="adminDaoImpl" />
+		</property>
+	</bean>
+	<bean id="AdminAction" class="com.news.action.AdminAction">
+		<property name="adminBizImpl">
+			<ref bean="adminBizImpl" />
+		</property>
+	</bean>
+
+	<bean id="newsinfoDaoImpl" class="com.news.dao.Impl.NewsinfoDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="newsinfoBizImpl" class="com.news.biz.Impl.NewsinfoBizImpl">
+		<property name="newsinfoDaoImpl">
+			<ref bean="newsinfoDaoImpl" />
+		</property>
+	</bean>
+	<bean id="NewsinfoAction" class="com.news.action.NewsinfoAction">
+		<property name="newsinfoBizImpl">
+			<ref bean="newsinfoBizImpl" />
+		</property>
+		<property name="topicBizImpl">
+			<ref bean="topicBizImpl" />
+		</property>
+	</bean>
+
+	<bean id="BackstageAction" class="com.news.action.BackstageAction">
+
+	</bean>
+
+
+
+</beans>

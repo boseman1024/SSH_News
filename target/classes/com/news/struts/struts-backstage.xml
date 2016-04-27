@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="backstage" namespace="/" extends="struts-default">
+
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.news.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="myInterceptor">  
+                <interceptor-ref name="defaultStack" />  
+                <interceptor-ref name="loginInterceptor" />  
+            </interceptor-stack>  
+		</interceptors>
+
+
+		<!-- 跳转至后台页面并获取新闻数量 -->
+		<action name="toBackstage" class="NewsinfoAction" method="NewsCount">
+			<interceptor-ref name="myInterceptor"></interceptor-ref>
+			<result name="error" type="chain">toLogin</result>
+			<result name="success">backstage/backstage.jsp</result>
+		</action>
+
+		<!-- 根据类型和页数查询新闻 -->
+		<action name="backstageQueryNewslist" class="NewsinfoAction"
+			method="queryNewslistByTypeAndPage">
+			<result type="chain">toBackstage</result>
+		</action>
+		<!-- 新闻发表 -->
+		<action name="toAddNews" class="NewsinfoAction" method="queryTopic">
+			<result type="chain">toBackstage</result>
+		</action>
+		<action name="addNews" class="NewsinfoAction" method="addNews">
+			<result type="chain">backstageQueryNewslist</result>
+			<result name="input">backstage/backstage.jsp</result>
+		</action>
+		<!-- 编辑新闻 -->
+		<action name="toUpdateNews" class="NewsinfoAction" method="toUpdateNews">
+			<result type="chain">toBackstage</result>
+			<result name="input">backstage/backstage.jsp</result>
+		</action>
+		<action name="updateNews" class="NewsinfoAction" method="updateNews">
+			<result type="chain">toBackstage</result>
+		</action>
+		<!-- 搜索新闻 -->
+		<action name="backstageSearchNews" class="NewsinfoAction"
+			method="searchNews">
+			<result type="chain">toBackstage</result>
+			<result name="input">backstage/backstage.jsp</result>
+		</action>
+
+
+	</package>
+</struts>

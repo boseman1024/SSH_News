@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="login" namespace="/" extends="struts-default">
+	
+		<!-- 跳转至登录页面 -->
+		<action name="toLogin">
+			<result name="success">login.jsp</result>
+		</action>
+		<!-- 登陆处理 -->
+		<action name="login" class="AdminAction">
+			<result name="success" type="redirect">index.jsp</result>
+			<result name="error" type="chain">toLogin</result>
+		</action>
+		<!-- 登出 -->
+		<action name="loginOut" class="AdminAction" method="loginOut">
+			<result name="success"></result>
+		</action>
+
+		
+	</package>
+</struts>

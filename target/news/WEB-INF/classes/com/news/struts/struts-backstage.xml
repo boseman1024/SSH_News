@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="backstage" namespace="/" extends="struts-default">
+	
+		<!-- 跳转至后台页面并获取新闻数量 -->
+		<action name="toBackstage" class="NewsinfoAction" method="NewsCount">
+			<result name="success">backstage/backstage.jsp</result>
+		</action> 
+		<!-- 退出后台 -->
+		<action name="toIndex">
+			<result name="success">index.jsp</result>
+		</action>
+		<!-- 根据类型和页数查询新闻 -->
+		<action name="backstageQueryNewslist" class="NewsinfoAction" method="queryNewslistByTypeAndPage">
+			<result type="chain">toBackstage</result>
+		</action>
+
+		
+	</package>
+</struts>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="newsinfo" namespace="/" extends="struts-default">
+		<!-- 跳转至首页 -->
+		<action name="toIndex" class="NewsinfoAction" method="queryNewslistByTypeAndNum">
+			<result name="success">index.jsp</result>
+		</action>
+		<!-- 获取新闻数量 -->
+		<action name="getNewsCount" class="NewsinfoAction" method="getNewsCount">
+			<result name="success">/test.jsp</result>
+		</action>
+		<!-- 根据类型和页数查询新闻 -->
+		<action name="queryNewslistByTypeAndPage" class="NewsinfoAction"
+			method="queryNewslistByTypeAndPage">
+			<result>newslist.jsp</result>
+		</action>
+		<!-- 根据ID删除新闻 -->
+		<action name="deleteNews" class="NewsinfoAction" method="deleteNews">
+			<result type="chain">toBackstage</result>
+		</action>
+		<!-- 跳转至新闻详情 -->
+		<action name="showNewsdetail" class="NewsinfoAction" method="showNewsDetail">
+			<result>newsdetail.jsp</result>
+		</action>
+		<!-- 搜索新闻 -->
+		<action name="searchNews" class="NewsinfoAction" method="searchNews">
+			<result>newslist.jsp</result>
+			<result name="input" >searchError.jsp</result>
+		</action>
+	</package>
+</struts>
